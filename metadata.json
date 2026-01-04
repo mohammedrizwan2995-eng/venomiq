@@ -1,0 +1,8 @@
+{
+  "name": "VenomIQ",
+  "description": "Precision Scorpioculture Management System supercharged with Gemini AI.",
+  "requestFramePermissions": [
+    "microphone",
+    "camera"
+  ]
+}
