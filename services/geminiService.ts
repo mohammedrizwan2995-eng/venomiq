@@ -1,5 +1,5 @@
 import { GoogleGenAI, Type } from "@google/genai";
-import { OperationsData, GroundingChunk } from "../types";
+import { GroundingChunk, Message, OperationsData } from "../types";
 
 const apiKey = process.env.API_KEY || '';
 const ai = new GoogleGenAI({ apiKey });
@@ -53,6 +53,22 @@ export const analyzeMarketTrends = async (): Promise<{text: string, sources?: Gr
     const sources = response.candidates?.[0]?.groundingMetadata?.groundingChunks as GroundingChunk[] | undefined;
     return { text: response.text || "No market data.", sources };
 }
+
+export const generateChatResponse = async (messages: Message[]): Promise<string> => {
+    const model = "gemini-3-flash-preview";
+    const response = await ai.models.generateContent({
+        model,
+        contents: messages.map((message) => ({
+            role: message.role === 'user' ? 'user' : 'model',
+            parts: [{ text: message.text }],
+        })),
+        config: {
+            systemInstruction:
+                "You are an AI co-founder. Provide structured, concise responses with clear steps, assumptions, and risks. Focus on business ideas, validation, and go-to-market guidance.",
+        },
+    });
+    return response.text || "No response generated.";
+};
 
 // --- Live API Utils ---
 export const getLiveClient = () => {

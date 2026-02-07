@@ -5,10 +5,11 @@ import ResearchLab from './components/StrategyEngine';
 import MarketPulse from './components/CreativeSuite';
 import GlobalHub from './components/BoardroomLive';
 import Safety from './components/Safety';
+import AIChat from './components/AIChat';
 import { ViewState } from './types';
 
 const App: React.FC = () => {
-  const [currentView, setCurrentView] = useState<ViewState>(ViewState.OPERATIONS);
+  const [currentView, setCurrentView] = useState<ViewState>(ViewState.CHAT);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const renderView = () => {
@@ -23,6 +24,8 @@ const App: React.FC = () => {
         return <Safety />;
       case ViewState.HUB:
         return <GlobalHub />;
+      case ViewState.CHAT:
+        return <AIChat />;
       default:
         return <Operations />;
     }
