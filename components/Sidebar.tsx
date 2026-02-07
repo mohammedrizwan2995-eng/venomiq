@@ -1,6 +1,6 @@
 import React from 'react';
 import { ViewState } from '../types';
-import { Activity, FlaskConical, TrendingUp, Radio, Menu, X, ShieldAlert, Bug } from 'lucide-react';
+import { Activity, FlaskConical, TrendingUp, Radio, Menu, X, ShieldAlert, MessageCircle } from 'lucide-react';
 
 interface SidebarProps {
   currentView: ViewState;
@@ -14,6 +14,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onNavigate, isOpen, setI
     { id: ViewState.OPERATIONS, label: 'Operations', icon: Activity },
     { id: ViewState.LAB, label: 'Research Lab', icon: FlaskConical },
     { id: ViewState.MARKET, label: 'Market Pulse', icon: TrendingUp },
+    { id: ViewState.CHAT, label: 'AI Command', icon: MessageCircle },
     { id: ViewState.SAFETY, label: 'Safety Log', icon: ShieldAlert },
     { id: ViewState.HUB, label: 'Global Hub', icon: Radio },
   ];
@@ -52,12 +53,12 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onNavigate, isOpen, setI
 
         <div className="flex-1 overflow-y-auto p-4 space-y-1">
             <div className="text-[10px] font-bold text-stone-400 uppercase px-3 mb-2 tracking-widest">Control</div>
-            {navItems.slice(0, 3).map((item) => (
+            {navItems.slice(0, 4).map((item) => (
               <NavButton key={item.id} item={item} isActive={currentView === item.id} onClick={() => handleNav(item.id)} />
             ))}
             
             <div className="text-[10px] font-bold text-stone-400 uppercase px-3 mt-6 mb-2 tracking-widest">Management</div>
-            {navItems.slice(3).map((item) => (
+            {navItems.slice(4).map((item) => (
               <NavButton key={item.id} item={item} isActive={currentView === item.id} onClick={() => handleNav(item.id)} />
             ))}
         </div>

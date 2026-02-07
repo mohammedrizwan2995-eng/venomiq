@@ -4,6 +4,7 @@ export enum ViewState {
   MARKET = 'MARKET',
   SAFETY = 'SAFETY',
   HUB = 'HUB',
+  CHAT = 'CHAT',
 }
 
 export interface OperationsData {
