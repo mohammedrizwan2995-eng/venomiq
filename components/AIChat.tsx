@@ -17,6 +17,29 @@ const quickActions = [
   { label: 'Competition Scan', prompt: 'List likely competitors and differentiation angles.' },
 ];
 
+const workflowSteps = [
+  {
+    id: 'discover',
+    title: 'Discover',
+    description: 'Capture the market, budget, and timeline constraints.',
+  },
+  {
+    id: 'ideate',
+    title: 'Ideate',
+    description: 'Generate and rank ideas by fit, risk, and differentiation.',
+  },
+  {
+    id: 'validate',
+    title: 'Validate',
+    description: 'Run assumption checks and experiment design.',
+  },
+  {
+    id: 'launch',
+    title: 'Launch',
+    description: 'Draft MVP scope, pricing, and go-to-market steps.',
+  },
+];
+
 const AIChat: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -28,6 +51,7 @@ const AIChat: React.FC = () => {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [signals, setSignals] = useState<string[]>([]);
+  const [activeStep, setActiveStep] = useState(workflowSteps[0]?.id ?? 'discover');
   const hasOnlyWelcome = messages.length === 1 && messages[0]?.id === 'welcome';
 
   const summary = useMemo(() => {
@@ -193,6 +217,37 @@ const AIChat: React.FC = () => {
         </div>
 
         <div className="space-y-6">
+          <div className="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm">
+            <h4 className="text-xs uppercase tracking-widest text-stone-400 mb-3">AI Workflow Manager</h4>
+            <div className="space-y-3">
+              {workflowSteps.map((step, index) => (
+                <button
+                  key={step.id}
+                  onClick={() => setActiveStep(step.id)}
+                  className={`w-full text-left rounded-xl border px-4 py-3 transition ${
+                    activeStep === step.id
+                      ? 'border-orange-200 bg-orange-50 text-orange-800'
+                      : 'border-stone-100 bg-stone-50 text-stone-600 hover:border-orange-200'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-sm">{step.title}</span>
+                    <span className="text-xs text-stone-400">Step {index + 1}</span>
+                  </div>
+                  <p className="text-xs mt-2">{step.description}</p>
+                </button>
+              ))}
+            </div>
+            <div className="mt-4 rounded-xl border border-dashed border-orange-200 bg-orange-50/60 p-4 text-xs text-orange-900">
+              <p className="font-semibold mb-1">Active Workflow Output</p>
+              <p>
+                {activeStep === 'discover' && 'We need industry, budget, and urgency to target the right opportunities.'}
+                {activeStep === 'ideate' && 'AI will list 5 ideas, score them, and highlight a standout option.'}
+                {activeStep === 'validate' && 'We will craft three experiments to validate demand quickly.'}
+                {activeStep === 'launch' && 'We will define MVP scope, launch channels, and week-one KPIs.'}
+              </p>
+            </div>
+          </div>
           <div className="bg-stone-900 text-white rounded-2xl p-6 shadow-sm">
             <p className="text-xs uppercase tracking-widest text-stone-400 mb-3">AI Signal Memory</p>
             <p className="text-sm text-stone-200 leading-relaxed">{summary}</p>
