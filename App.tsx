@@ -9,7 +9,7 @@ import AIChat from './components/AIChat';
 import { ViewState } from './types';
 
 const App: React.FC = () => {
-  const [currentView, setCurrentView] = useState<ViewState>(ViewState.OPERATIONS);
+  const [currentView, setCurrentView] = useState<ViewState>(ViewState.CHAT);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const renderView = () => {

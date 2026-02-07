@@ -28,6 +28,7 @@ const AIChat: React.FC = () => {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [signals, setSignals] = useState<string[]>([]);
+  const hasOnlyWelcome = messages.length === 1 && messages[0]?.id === 'welcome';
 
   const summary = useMemo(() => {
     if (signals.length === 0) {
@@ -111,6 +112,28 @@ const AIChat: React.FC = () => {
           </div>
 
           <div className="flex-1 overflow-y-auto p-6 space-y-4">
+            {hasOnlyWelcome && (
+              <div className="rounded-2xl border border-orange-100 bg-orange-50 p-4 text-sm text-orange-900">
+                <p className="font-semibold mb-2">Kickstart the chat</p>
+                <p className="text-xs text-orange-800 mb-3">
+                  Share a market, budget, or timeline. The AI will propose ideas, validate them, and create next steps.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    onClick={() => handleSend('I have $5k to start and want a B2B SaaS idea for operations teams.')}
+                    className="px-3 py-1.5 rounded-full bg-white text-orange-700 text-xs font-semibold border border-orange-200 hover:bg-orange-100 transition"
+                  >
+                    Start with a budget
+                  </button>
+                  <button
+                    onClick={() => handleSend('I want a business idea in the wellness space with a 60-day MVP.')}
+                    className="px-3 py-1.5 rounded-full bg-white text-orange-700 text-xs font-semibold border border-orange-200 hover:bg-orange-100 transition"
+                  >
+                    Start with a timeline
+                  </button>
+                </div>
+              </div>
+            )}
             {messages.map((message) => (
               <div key={message.id} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div
@@ -202,6 +225,15 @@ const AIChat: React.FC = () => {
             <p className="text-sm text-stone-600 leading-relaxed">
               The AI co-founder will challenge assumptions, propose MVPs, and surface risks automatically.
             </p>
+          </div>
+          <div className="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm">
+            <h4 className="text-xs uppercase tracking-widest text-stone-400 mb-3">Idea Brief Template</h4>
+            <ul className="text-sm text-stone-600 space-y-2">
+              <li>• Target customer + pain point</li>
+              <li>• Differentiated solution</li>
+              <li>• Pricing + channels</li>
+              <li>• MVP scope + timeline</li>
+            </ul>
           </div>
         </div>
       </div>
